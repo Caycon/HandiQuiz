@@ -56,6 +56,7 @@ class QUIZ_SETUP:
 					utils.showPopupCritical("Image error", f'{ques}\n\nInvalid image path: {img}')
 					# print(f"Question: \n")
 					return
+			img_path = img_path.replace('\\', '/')
 
 			# Check correct answer number
 			if not correct:
@@ -75,7 +76,7 @@ class QUIZ_SETUP:
 			# Save data
 			if img_path:
 				shutil.copy(img_path, os.path.abspath(f'{main.DATAPATH}/{filename}/images'))
-				img_path = 'images/' + img_path.split('\\')[-1]
+				img_path = 'images/' + img_path.split('/')[-1]
 			data.append({
 				'question': ques,
 				'image': img_path,

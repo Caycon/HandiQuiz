@@ -45,6 +45,8 @@ class QUIZ_MAIN:
 		else:
 			tmp = []
 			for _ in range(self.number_of_question):
+				if len(questions) == 0:
+					break
 				question = random.choice(questions)
 				tmp.append(question)
 				questions.remove(question)
@@ -148,7 +150,6 @@ class QUIZ_MAIN:
 			layout.addWidget(wdgAnswer)
 
 	def submit(self):
-		print('test')
 		self.saveAnswer(1)
 		if self.show_answer_mode:		# If show answer mode then change background color of list question
 			question = self.questions[self.current_question]

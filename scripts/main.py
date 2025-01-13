@@ -40,9 +40,6 @@ class ImageLabel(QLabel):
 			)
 			super().setPixmap(scaled_pixmap)
 
-def test():
-	print('test')
-
 class Application():
 	def __init__(self, ui):
 		self.window = ui
