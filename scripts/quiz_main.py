@@ -58,7 +58,11 @@ class QUIZ_MAIN:
 		self.show_answer_mode = is_show_answer
 
 		# Add questions to list widget
-		self.window.lstQuestions.addItems([self.questions[i]['question'] for i in range(len(self.questions))])
+		for obj in self.questions:
+			if len(obj['question'].split('\n')[0]) < 28:
+				self.window.lstQuestions.addItems([obj['question'].split('\n')[0]])
+			else:
+				self.window.lstQuestions.addItems([obj['question'].split('\n')[0][:28] + '...'])
 		self.showQuestion()
 
 	def jumpToQuestion(self, item):
