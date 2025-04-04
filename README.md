@@ -25,6 +25,7 @@ Opening the app will show you the setup screen:
 On this screen, click at `File` on taskbar and you will see 2 buttons `Import` and `Open`:
 - `Import` (shortcut `Ctrl + i`): Import questions from excel file and output to a file with extension `.hqz` in `data` folder and then do quiz (template is given in `example` folder)
 - `Open` (shortcut `Ctrl + o`): Open `.hqz` file to do quiz
+- `Export` (shortcut `Ctrl + e`): Export from imported quiz to PDF file
 
 There are 2 modes:
 - `Quiz`: select randomly `Number of questions` from the question pack
