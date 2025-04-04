@@ -221,5 +221,9 @@ class QUIZ_MAIN:
 		self.questions = None
 		self.show_answer_mode = False
 		self.show_answer = False
-		self.image_label = None
 		self.btnGrpAnswer = None
+		if self.image_label:
+			layout = self.window.widget.layout()
+			layout.removeWidget(self.image_label)  # Remove widget from layout
+			self.image_label.deleteLater()  # Delete the widget to free memory
+			self.image_label = None  # Clear the reference to the widget

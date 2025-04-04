@@ -1,11 +1,17 @@
 # HandiQuiz
 
 ## Requirement
-- xlrd: `pip install xlrd`
+- xlrd (tested on v1.2.0)
+- PySide6 (tested on v6.7.2)
+- ReportLab (tested on v4.3.1)
+
+```bash
+pip install xlrd PySide6 reportlab
+```
 
 ## Documentation
 
-Several shortcuts you should now:
+Several shortcuts you should know:
 - `Ctrl + [`: Decrease font size
 - `Ctrl + ]`: Increase font size
 - `Esc`: Exit (when in setup screen) or go back to setup screen (when in quiz screen)

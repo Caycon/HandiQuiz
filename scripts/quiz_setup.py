@@ -4,9 +4,14 @@ import xlrd
 import json
 import shutil
 import tempfile
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfbase import pdfmetrics
+from reportlab.lib.utils import ImageReader
+from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
 
 from PySide6.QtWidgets import QFileDialog
-
 from scripts import main, utils
 
 NUMBER_OF_QUESTION = 30
@@ -103,9 +108,67 @@ class QUIZ_SETUP:
 		self.extractQuiz(file_path[0])
 		self.setNumberOfQuestion()
 
+	def fileExport(self):
+		if not main.QUIZNAME or not main.TMPQUIZPATH:
+			utils.showPopupInfo("Missing HandiQuiz file", f'Please open a HandiQuiz file before exporting the quiz')
+			return
+		file_path = QFileDialog.getSaveFileName(self.window, "Export to PDF", "", "PDF (*.pdf)")
+		print(file_path)
+		if not file_path[0]:
+			return
+		pdfmetrics.registerFont(TTFont('TimesNewRoman', 'C:/Windows/Fonts/times.ttf'))
+		pdfmetrics.registerFont(TTFont('TimesNewRomanBold', 'C:/Windows/Fonts/timesbd.ttf'))
+		doc = SimpleDocTemplate(file_path[0], pagesize=A4)
+		question_style = ParagraphStyle(
+		    name="Vietnamese",
+		    fontName="TimesNewRoman",
+		    fontSize=12,
+		    leading=15  # Line spacing
+		)
+		answer_style = ParagraphStyle(
+		    name="Vietnamese",
+		    fontName="TimesNewRoman",
+		    fontSize=12,
+		    leading=15,  # Line spacing
+		    firstLineIndent=10
+		)
+		answer_correct_style = ParagraphStyle(
+		    name="VietnameseBold",
+		    fontName="TimesNewRomanBold",
+		    fontSize=12,
+		    leading=15,  # Line spacing
+		    firstLineIndent=10
+		)
+		content = []
+
+		questions = json.loads(open(f'{main.TMPQUIZPATH}/data', 'r').read())
+		for question in questions:
+			content.append(Paragraph(question['question'].replace('\n', '<br/>') + '<br/>', question_style))
+			if question['image']:
+				image = ImageReader(f"{main.TMPQUIZPATH}/{question['image']}")
+				img_width, img_height = image.getSize()
+				scale_width = 400
+				scale_height = (scale_width / img_width) * img_height  # Maintain aspect ratio
+				img = Image(f"{main.TMPQUIZPATH}/{question['image']}", width=scale_width, height=scale_height)
+				content.append(img)
+			for i,answer in enumerate(question['answers']):
+				if i+1 in question['correct']:
+					content.append(Paragraph(f'  <b>{answer}</b><br/>', answer_correct_style))
+				else:
+					content.append(Paragraph(f'  {answer}<br/>', answer_style))
+			content.append(Spacer(1, 24))
+		try:
+			doc.build(content)
+		except Exception as e:
+			utils.showPopupCritical('Error exporting...', str(e))
+
+
 	def extractQuiz(self, file_path):
+		# Remove existed temp folder
 		if os.path.exists(main.TMPQUIZPATH):
 			shutil.rmtree(main.TMPQUIZPATH)
+		
+		# Remove existed temp folder
 		main.QUIZNAME = '.'.join(file_path.split('/')[-1].split('.')[:-1])
 		main.TMPQUIZPATH = tempfile.gettempdir().replace('\\', '/') + '/' + main.QUIZNAME
 		if os.path.exists(main.TMPQUIZPATH):

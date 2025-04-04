@@ -80,7 +80,7 @@ class Application():
 		QShortcut(shortcut, self.window).activated.connect(lambda: utils.decreaseAppSize(self.window))
 		# Add shortcut "Enter" in frame Quiz
 		shortcut = QKeySequence("Enter")
-		QShortcut(shortcut, self.window).activated.connect(self.QUIZ_MAIN.submit)
+		QShortcut(shortcut, self.window).activated.connect(lambda: self.QUIZ_MAIN.submit() if self.window.stackedWidget.currentIndex==1 else None)
 		# Add shortcut "Esc" in frame Quiz to return back frame Home
 		shortcut = QKeySequence("Esc")
 		QShortcut(shortcut, self.window).activated.connect(self.processEscape)
@@ -88,6 +88,7 @@ class Application():
 		# Setup menu action
 		self.window.actionImport.triggered.connect(lambda: self.QUIZ_SETUP.fileImport(self.questions))
 		self.window.actionOpen.triggered.connect(lambda: self.QUIZ_SETUP.fileOpen(self.questions))
+		self.window.actionExport.triggered.connect(self.QUIZ_SETUP.fileExport)
 		self.window.actionExit.triggered.connect(self.processExit)
 		self.window.actionAbout.triggered.connect(self.processAbout)
 
@@ -106,7 +107,7 @@ class Application():
 	def switchFrame(self, frame_num):
 		if frame_num==1:
 			if not self.window.lnName.text() or not self.window.lnNOQues.text():
-				utils.showPopupInfo("No find found", 'you did not open anyfile')
+				utils.showPopupInfo("Missing HandiQuiz file", 'Please open a HandiQuiz file before starting the quiz')
 				return
 			self.QUIZ_MAIN.startQuiz(self.btnGrpMode.checkedButton() == self.window.rbtnModePractice,
 				self.btnGrpShowAns.checkedButton() == self.window.rbtnShowAnswerYes,
