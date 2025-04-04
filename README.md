@@ -33,7 +33,7 @@ There are 2 modes:
 
 If `Show answer` is `Yes` and when you click on `Submit` the current question will show the answer and other won't. If `Show answer` is `No` and when you click on `Submit`, all of the questions will show its answer.
 
-When you set `Number of questions`, remember to click on `Set` button to update the number and also update the `Part number` if you are in `Practice` mode.
+When you set `Number of questions`, remember to click on `Set` button to update the number and also to update the `Part number` if you are in `Practice` mode.
 
 If everything is set, you just need to click on `START` button to begin your quiz!
 
@@ -46,8 +46,18 @@ You can see there are 3 sections: question, answer and question list (the list o
 - Answer: Each answer is bind to a number on your keyboard so if you press **`number 1`**, you will select answer 1... If you want to go to next question or previous question, you can press button **`>`** or **`<`** on your keyboard and if you don't want to click on `Submit` button, you can press button **`Enter`** or **`Return`** on your keyboard too.
 - Question list: The list help you navigate through all questions by **double click** on the question you want to jump into.
 
-Finally, if you are done doing quiz, just press `Esc` on your keyboard to return back to setup screen!
+Finally, if you are done doing quiz and want to get back to setup screen, just press `Esc` on your keyboard!
 
 ### Excel Template
 
+Download template: [template.zip](template.zip)
 
+Extract that file zip and you will receive `template` folder. Open the excel and you will see there are several types of question:
+
+![](images/template.png)
+
+`Question 1`, `Question 2` and `Question 5` show you that you can have as many answer as as you want!
+
+`Question 3` show you that this question has 2 correct option and user has to select them for right answer.
+
+`Question 5` show you that you can add only 1 image to question by specify image name that in the same folder as this excel is (image.jpg). You can use extension PNG, too.
